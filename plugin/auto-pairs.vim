@@ -67,6 +67,10 @@ if !exists('g:AutoPairsSkipToNextClosedPair')
   let g:AutoPairsSkipToNextClosedPair = 1
 endif
 
+if !exists('g:AutoPairsDisableJustBeforeChar')
+    let g:AutoPairsDisableJustBeforeChar = 0
+endif
+
 " Will auto generated {']' => '[', ..., '}' => '{'}in initialize.
 let g:AutoPairsClosedPairs = {}
 
@@ -185,6 +189,10 @@ function! AutoPairsInsert(key)
     if n % 2 == 1
       return a:key
     endif
+  endif
+
+  if g:AutoPairsDisableJustBeforeChar && current_char =~ '\S'
+      return a:key
   endif
 
   return open.close."\<Left>"
