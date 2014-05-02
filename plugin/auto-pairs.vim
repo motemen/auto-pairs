@@ -63,6 +63,9 @@ if !exists('g:AutoPairsSmartQuotes')
   let g:AutoPairsSmartQuotes = 1
 endif
 
+if !exists('g:AutoPairsSkipToNextClosedPair')
+  let g:AutoPairsSkipToNextClosedPair = 1
+endif
 
 " Will auto generated {']' => '[', ..., '}' => '{'}in initialize.
 let g:AutoPairsClosedPairs = {}
@@ -109,7 +112,7 @@ function! AutoPairsInsert(key)
       end
 
       " Skip the character if closed pair is next character
-      if current_char == ''
+      if current_char == '' && g:AutoPairsSkipToNextClosedPair
         let next_lineno = line('.')+1
         let next_line = getline(nextnonblank(next_lineno))
         let next_char = matchstr(next_line, '\s*\zs.')
